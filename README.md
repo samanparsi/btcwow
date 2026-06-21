@@ -28,9 +28,10 @@ This system implements a decoupled architecture where feature extraction is hand
 | :--- | :--- |
 | **Asset** | BTC-USD |
 | **Timeframe** | Daily (1D) |
-| **Final ROI** | ~440% (Based on recent backtest) |
+| **Final ROI** | ~440% (Based on recent backtest) *|
 | **Validation** | 20% Out-of-Sample Walk-Forward |
 
+* The 440% ROI is based on 5 years of bactest trading.
 ## 💻 Quick Start
 ```bash
 pip install stable-baselines3 gymnasium yfinance torch scikit-learn
