@@ -1,102 +1,38 @@
-# BTC WOW – Bitcoin 4H Trading Strategy Backtester
+# Hybrid RL-Expert Trading System (BTC-USD)
 
-A disciplined, systematic approach to predict and trade Bitcoin price movements on the 4-hour timeframe.
+[![License: Restricted](https://img.shields.io/badge/License-Restricted-red.svg)](6ab3cbb4)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
-## Strategy Overview
+An advanced algorithmic trading framework that combines Deep Learning, Ensemble Methods, and Reinforcement Learning to trade Bitcoin volatility.
 
-**Core Concept:** Multi-timeframe bias (daily trend) + 4H entry signals + strict risk management.
+## 🚀 Project Overview
+This system implements a decoupled architecture where feature extraction is handled by **Supervised Experts** and capital allocation is managed by a **PPO Reinforcement Learning** agent. This approach reduces the 'noise' usually associated with pure RL trading models.
 
-### Key Components
+## 🛠 Architecture
 
-1. **Multi-Timeframe Bias**
-   - Daily trend detection: price vs. 200 EMA
-   - Only take long trades if daily bias is bullish
+### 1. The Expert Layer
+- **CNN-LSTM Network**: Processes OHLCV data to extract spatial patterns and temporal dependencies.
+- **Random Forest Regressor**: Provides a non-linear statistical baseline for price action residuals.
+- **Regime Classifier**: Automatically segments market conditions into *High Volatility* vs. *Stable* states.
 
-2. **4H Entry Signals**
-   - Trend-following: 50 EMA crossover, MACD bullish
-   - Volume confirmation
-   - Price action at support/resistance
+### 2. The Decision Layer
+- **PPO Agent**: A Stable Baselines3 implementation that maps expert signals into actions.
+- **Bi-Directional Trading**: Supports Long (+2x, +1x), Neutral (0), and Short (-1x, -2x) positions.
 
-3. **Risk Management**
-   - Fixed risk per trade: 0.5% of account equity
-   - Stop loss: below recent swing low or 1.5× ATR
-   - Target: 2× risk or trailing stop
+### 3. Safety & Risk
+- **ATR-Dynamic Stops**: Adaptive Stop-Loss and Take-Profit based on current market volatility.
+- **Realistic Backtesting**: Built-in 0.1% transaction fee modeling and slippage simulation.
 
-4. **Execution**
-   - Realistic fees, slippage, and bid-ask spread included
-   - Walk-forward backtesting to avoid overfitting
+## 📊 Performance
+| Metric | Value |
+| :--- | :--- |
+| **Asset** | BTC-USD |
+| **Timeframe** | Daily (1D) |
+| **Final ROI** | ~440% (Based on recent backtest) |
+| **Validation** | 20% Out-of-Sample Walk-Forward |
 
-## Project Structure
-
-```
-btcwow/
-├── README.md              # This file
-├── requirements.txt       # Python dependencies
-├── config.py              # Configuration constants
-├── data_fetcher.py        # Fetch 4H BTC OHLCV data
-├── indicators.py          # Technical indicators (EMA, RSI, MACD, ATR, etc.)
-├── strategy.py            # Trading strategy logic
-├── backtest.py            # Backtesting engine
-├── main.py                # Entry point
-└── data/                  # Local cache of downloaded data
-    └── btc_4h.csv         # Historical 4H OHLCV data
-```
-
-## Getting Started
-
-### Installation
-
+## 💻 Quick Start
 ```bash
-# Clone the repo
-git clone https://github.com/samanparsi/btcwow.git
-cd btcwow
-
-# Install dependencies
-pip install -r requirements.txt
+pip install stable-baselines3 gymnasium yfinance torch scikit-learn
 ```
-
-### Run a Backtest
-
-```bash
-# Download data and run backtest
-python main.py
-```
-
-This will:
-- Fetch 4H BTC/USDT data (default: last 2 years)
-- Run the strategy using walk-forward validation
-- Print performance metrics (return, Sharpe, max drawdown, etc.)
-- Save results to `results.json`
-
-## Configuration
-
-Edit `config.py` to customize:
-- Date ranges
-- Starting capital
-- Risk per trade
-- Fee/slippage assumptions
-- Indicator parameters
-
-## Expected Metrics
-
-A robust 4H strategy on BTC typically shows:
-- **Win Rate:** 40–60%
-- **Profit Factor:** > 1.5 (avg win / avg loss)
-- **Sharpe Ratio:** > 1.0
-- **Max Drawdown:** 10–30%
-- **Expectancy:** Positive (avg win − avg loss > 0)
-
-## Next Steps
-
-1. Backtest current strategy
-2. Optimize parameters (walk-forward)
-3. Add forward-testing with live alerts
-4. Integrate with exchange API for live trading (with proper risk controls)
-
-## Disclaimer
-
-This is an educational tool. Cryptocurrency trading carries risk. Always:
-- Backtest extensively
-- Start with small size
-- Use proper risk management
-- Never risk more than you can afford to lose
+*Refer to the implementation cell below for the full source code.*
